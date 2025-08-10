@@ -1,11 +1,3 @@
-
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-✨ Enhanced Paradox Loop CAPTHA - Production Ready
-With Prometheus metrics, Redis resilience, and container support
-"""
-
 import hmac
 from flask import Flask, jsonify, request, abort, has_request_context
 from flask_limiter import Limiter
