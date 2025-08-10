@@ -1,4 +1,4 @@
-Here’s your **epic README** for the AI-driven, Kintsugi-inspired CAPTCHA protocol with the paradox loop trap, written in your **poetic-cybersecurity** style.
+AI-driven, Kintsugi-inspired CAPTCHA protocol with the paradox loop trap
 
 ---
 
