@@ -205,17 +205,6 @@ Click the badge at the top or open this repo in the browser VS Code:
 
 ➡️ [https://vscode.dev/github/Saranoah/paradox-loop-captcha](https://vscode.dev/github/Saranoah/paradox-loop-captcha)
 
-(If your repo name differs, replace the path: `vscode.dev/github/<your-username>/<your-repo>`)
 
 ---
 
-## ✨ Final Words
-
-Paradox-Loop CAPTCHA is a ritualized defense: not just a gate, but a crucible where meaning is the metric and fracture becomes strength. If you want, I will:
-
-* generate the full frontend (Kintsugi CSS + JS telemetry client),
-* produce runnable Docker + Gunicorn recipe,
-* add an `audit.md` explaining adversarial vectors and mitigation,
-* and push a pretty `README.md` and `index.html` into your repo.
-
-Which of those should I create next?
