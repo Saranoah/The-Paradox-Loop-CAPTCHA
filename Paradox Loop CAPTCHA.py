@@ -5,6 +5,24 @@
 Now with recursive trapping and quantum entanglement
 """
 # Add to server initialization
+
+# Create managed Redis instance (AWS example)
+aws elasticache create-cache-cluster \
+  --cluster-id paradox-redis \
+  --engine redis \
+  --cache-node-type cache.t3.micro \
+  --num-cache-nodes 1
+# Kubernetes secret example
+kubectl create secret generic captcha-secrets \
+  --from-literal=HMAC_SECRET=$STRONG_SECRET \
+  --from-literal=SESSION_SECRET=$ANOTHER_SECRET
+
+# Prometheus metrics endpoint
+from prometheus_flask_exporter import PrometheusMetrics
+
+metrics = PrometheusMetrics(app)
+metrics.info('app_info', 'Paradox Loop CAPTCHA', version='2.0')
+
 @app.after_request
 def add_security_headers(response):
     response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
