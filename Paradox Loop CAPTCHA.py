@@ -5,8 +5,16 @@
 Now with recursive trapping and quantum entanglement
 """
 
-from flask import Flask, jsonify, request, abort
-import secrets
+from flask import Flask, jsonify, request, abort 
+import secrets# Custom rate limit strategy
+limiter = Limiter(
+    app=app,
+    key_func=lambda: request.headers.get("X-Forwarded-For", get_remote_address()),
+    storage_uri="redis://localhost:6379",
+    strategy="moving-window",  # More accurate than fixed-window
+    default_limits=["500 per hour", "100 per minute"],
+    headers_enabled=True  # Show rate limit headers in responses
+)
 import time
 import hashlib
 import random
