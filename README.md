@@ -16,7 +16,7 @@ graph TD
     B -->|Bot-like Determinism| D[Stateful, Harder Puzzle]
     D -->|Iterative Deepening| E[Increased OPSEC Cost]
     E --> F[Bot Deterred]
-
+</div>
 ✨ The Vision: Transcending Traditional Security
 Traditional security is a brittle, adversarial arms race. We believe in a paradigm inspired by Kintsugi (金継ぎ), the Japanese art of golden repair:
 
@@ -111,3 +111,13 @@ The Kintsugi Oath:
 "We seek not to break, but to understand. Not to repel, but to transform. We are building a more resilient, beautiful, and intuitive digital world."
 
 <div align="center">
+https://img.shields.io/badge/%25E2%259A%2599%25EF%25B8%258F-A_Project_in_Transformative_Security-gold
+
+</div>
+Explore the vision:
+[ Research Paper Draft ] • [ Contribution Guidelines ]
+
+bash
+# One line to start exploring (CAPT prototype)
+git clone https://github.com/your-username/kintsugi-paradox.git && cd kintsugi-paradox/paradox-captcha && pip install -r requirements.txt && python app.py
+<div align="center"> <sub>Built by open-source contributors • Protected by elegant logic • Validated through collaboration</sub> </div> ```
