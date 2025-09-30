@@ -1,3 +1,5 @@
+from prometheus_client import Counter, Histogram, Gauge, generate_latest, CONTENT_TYPE_LATEST
+from flask import Response
 import hmac
 from flask import Flask, jsonify, request, abort, has_request_context
 from flask_limiter import Limiter
@@ -787,3 +789,32 @@ def start_background_threads():
 if __name__ == "__main__":
     start_background_threads()
     app.run(host="0.0.0.0", port=5000, threaded=True)
+
+# --- Prometheus Metrics ---
+paradox_sessions_total = Counter(
+    'paradox_sessions_total',
+    'Total CAPTCHA sessions created'
+)
+
+paradox_rounds_total = Counter(
+    'paradox_rounds_total',
+    'Rounds processed by type and trap mode',
+    ['type', 'trap_mode']
+)
+
+paradox_session_trap_depth = Histogram(
+    'paradox_session_trap_depth',
+    'Distribution of trap depths'
+)
+
+paradox_bot_likelihood_score = Gauge(
+    'paradox_bot_likelihood_score',
+    'Bot likelihood score for current session'
+)
+
+paradox_challenge_success = Counter(
+    'paradox_challenge_success',
+    'Challenge success rate by type',
+    ['type']
+)
+
