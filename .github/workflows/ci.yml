@@ -1,0 +1,68 @@
+import pytest
+import os
+from backend.src.captcha.paradox_loop import (
+    new_session, store_session, get_session, delete_session,
+    challenge_creative_input, validate_creative_input, score_round,
+    HMAC_SECRET, validate_config
+)
+
+@pytest.fixture
+def set_env(monkeypatch):
+    monkeypatch.setenv("HMAC_SECRET", "test-secret")
+    monkeypatch.setenv("REDIS_URL", "redis://localhost:6379")
+
+def test_validate_config_missing_hmac(monkeypatch):
+    monkeypatch.delenv("HMAC_SECRET", raising=False)
+    with pytest.raises(RuntimeError, match="Required env var HMAC_SECRET not set"):
+        validate_config()
+
+def test_validate_config_defaults(monkeypatch, caplog):
+    monkeypatch.setenv("HMAC_SECRET", "test-secret")
+    monkeypatch.delenv("REDIS_URL", raising=False)
+    validate_config()
+    assert "REDIS_URL not set, using default: redis://localhost:6379" in caplog.text
+
+def test_new_session(set_env):
+    session = new_session()
+    assert "token" in session
+    assert len(session["token"]) == 44  # secrets.token_urlsafe(32)
+    assert session["rounds"] == []
+    assert session["trap_depth"] == 0
+
+def test_store_get_session_in_memory(set_env, monkeypatch):
+    monkeypatch.setattr("backend.src.captcha.paradox_loop.redis_conn", None)
+    session = new_session()
+    store_session(session)
+    retrieved = get_session(session["token"])
+    assert retrieved["token"] == session["token"]
+    assert retrieved["trap_depth"] == 0
+
+def test_challenge_creative_input():
+    session = new_session()
+    challenge = challenge_creative_input(session)
+    assert challenge["type"] == "creative_input"
+    assert challenge["text"] == "Name something that doesn't exist but should"
+    assert challenge["input"] is True
+
+def test_validate_creative_input():
+    session = new_session()
+    meta = {"response_time_ms": 2000}
+    context = {}
+    score, explanation, bot_likelihood = validate_creative_input("Flying car", meta, session, context)
+    assert score == 4
+    assert explanation == "creative response"
+    assert bot_likelihood == 0.2
+
+    score, explanation, bot_likelihood = validate_creative_input("a", meta, session, context)
+    assert score == 1
+    assert explanation == "too short"
+    assert bot_likelihood == 0.9
+
+def test_score_round(set_env):
+    session = new_session()
+    challenge = challenge_creative_input(session)
+    meta = {"response_time_ms": 2000}
+    score, explanation, bot_likelihood = score_round(session, challenge, "Flying car", meta)
+    assert score == 4
+    assert explanation == "creative response"
+    assert bot_likelihood == 0.2
