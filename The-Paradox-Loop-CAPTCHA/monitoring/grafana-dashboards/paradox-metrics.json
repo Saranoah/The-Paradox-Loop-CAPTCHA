@@ -1,0 +1,43 @@
+{
+  "dashboard": {
+    "id": null,
+    "title": "Paradox CAPTCHA Metrics",
+    "panels": [
+      {
+        "type": "graph",
+        "title": "Total Sessions Created",
+        "targets": [
+          { "expr": "paradox_sessions_total" }
+        ]
+      },
+      {
+        "type": "graph",
+        "title": "Rounds Processed by Trap Mode",
+        "targets": [
+          { "expr": "paradox_rounds_total" }
+        ]
+      },
+      {
+        "type": "gauge",
+        "title": "Trap Depth Distribution",
+        "targets": [
+          { "expr": "paradox_session_trap_depth" }
+        ]
+      },
+      {
+        "type": "graph",
+        "title": "Bot Likelihood Scores",
+        "targets": [
+          { "expr": "paradox_bot_likelihood_score" }
+        ]
+      },
+      {
+        "type": "graph",
+        "title": "Challenge Success Rate",
+        "targets": [
+          { "expr": "paradox_challenge_success" }
+        ]
+      }
+    ]
+  }
+}
