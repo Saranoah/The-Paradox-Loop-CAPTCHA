@@ -1,33 +1,42 @@
+# =====================================
 # Python
+# =====================================
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-.Python
+*.sqlite3
 env/
 venv/
+.venv/
+
+# =====================================
+# Project-Specific
+# =====================================
+# Actual config with secrets
+config.py
+
+# Environment files
+.env
 *.env
 
-# Configuration
-config.py
-.env
-
-# Logs
+# Local development
 *.log
+*.tmp
 
 # Docker
-*.dockerignore
+*.pid
+*.seed
+docker-compose.override.yml
 
-# IDEs
+# Monitoring data
+monitoring/data/
+prometheus-data/
+
+# =====================================
+# IDE & Editor Files
+# =====================================
 .vscode/
 .idea/
-
-# OS-specific
+*.swp
 .DS_Store
-Thumbs.db
-
-# Testing
-.pytest_cache/
-coverage/
-*.xml
-
