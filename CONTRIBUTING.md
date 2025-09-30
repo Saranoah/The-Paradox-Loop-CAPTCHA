@@ -80,7 +80,7 @@ Click "New Issue" → "Bug Report"
 #### 💻 **Write Code**
 ```bash
 # 1. Fork the repository
-git clone https://github.com/YOUR-USERNAME/The-Paradox-Loop-CAPTCHA.git
+git clone (https://github.com/Saranoah/The-Paradox-Loop-CAPTCHA)
 
 # 2. Create a branch
 git checkout -b feature/amazing-feature
