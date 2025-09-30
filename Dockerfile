@@ -1,17 +1,36 @@
-FROM python:3.11-slim
+version: "3.8"
 
-RUN apt-get update && apt-get install -y \
-    build-essential \
-    libssl-dev \
-    && rm -rf /var/lib/apt/lists/*
+services:
+  paradox-captcha:
+    build: ./backend
+    container_name: paradox-captcha
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+    depends_on:
+      - redis
 
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+  redis:
+    image: redis:7.0
+    container_name: paradox-redis
+    ports:
+      - "6379:6379"
 
-COPY . .
+  prometheus:
+    image: prom/prometheus
+    container_name: paradox-prometheus
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - paradox-captcha
 
-CMD ["gunicorn", "paradox_loop_server:app", \
-     "--bind", "0.0.0.0:5000", \
-     "--workers", "4", \
-     "--worker-class", "gevent"]
+  grafana:
+    image: grafana/grafana
+    container_name: paradox-grafana
+    ports:
+      - "3000:3000"
+    depends_on:
+      - prometheus
